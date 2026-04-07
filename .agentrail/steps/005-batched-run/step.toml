@@ -1,6 +1,6 @@
 number = 5
 slug = "batched-run"
-status = "pending"
+status = "in-progress"
 description = "Convert the runner to a batched/tick mode driven by gloo Timeout (BATCH_SIZE ..."
 role = "production"
 context_files = []

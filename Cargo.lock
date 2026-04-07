@@ -1110,6 +1110,7 @@ dependencies = [
  "cor24-emulator",
  "cor24-isa",
  "gloo 0.11.0",
+ "js-sys",
  "wasm-bindgen",
  "web-sys",
  "yew",
