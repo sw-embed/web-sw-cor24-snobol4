@@ -1,6 +1,6 @@
 number = 7
 slug = "pages-deploy"
-status = "pending"
+status = "in-progress"
 description = "Run 'trunk build --release', copy dist/* into pages/, commit pages/. Confirm ..."
 role = "production"
 context_files = []

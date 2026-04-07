@@ -1,0 +1,1 @@
+Wrote src/ui.css with full dark theme: 960px max-width centered layout, monospace source/data/output panels, system sans chrome, GitHub-dark palette, accent-colored Run button, focus rings on textareas, status-error color, link-btn styling for Increase Budget. index.html already wired via data-trunk.
