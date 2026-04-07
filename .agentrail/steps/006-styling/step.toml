@@ -1,6 +1,6 @@
 number = 6
 slug = "styling"
-status = "pending"
+status = "in-progress"
 description = "Add src/ui.css with a dark theme matching the macrolisp project's vibe: monos..."
 role = "production"
 context_files = []
