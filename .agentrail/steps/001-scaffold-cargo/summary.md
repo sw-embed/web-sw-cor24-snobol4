@@ -1,0 +1,1 @@
+Scaffolded Cargo+Trunk+Yew skeleton (cdylib+rlib edition 2024) with cor24-emulator/cor24-isa path deps, Trunk.toml on port 9136, index.html, and a minimal App component rendering page chrome from docs/design.md. cargo check passes.

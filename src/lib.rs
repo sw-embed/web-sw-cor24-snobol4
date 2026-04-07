@@ -1,5 +1,7 @@
 use yew::prelude::*;
 
+pub mod demos;
+
 pub struct App;
 
 impl Component for App {
