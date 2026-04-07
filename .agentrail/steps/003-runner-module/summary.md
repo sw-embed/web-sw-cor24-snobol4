@@ -1,0 +1,1 @@
+Added src/runner.rs with run_snobol4(src, data, max_instrs) -> Result<RunResult,String>. Constructs EmulatorCore, loads SNOBOL4_BIN@0x0, src@0x080000, data@0x090000 (null-terminated), PC=0, runs in 200k batches up to budget, handles all StopReason variants, returns UART output + stats. cargo check passes.

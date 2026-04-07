@@ -1,6 +1,6 @@
 number = 4
 slug = "ui-components"
-status = "pending"
+status = "in-progress"
 description = "Build the Yew App per docs/design.md: a single-column page with a header cont..."
 role = "production"
 context_files = []
