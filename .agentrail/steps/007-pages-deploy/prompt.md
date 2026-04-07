@@ -1,0 +1,1 @@
+Run 'trunk build --release', copy dist/* into pages/, commit pages/. Confirm .github/workflows/pages.yml is in place. Update README.md with a one-paragraph project description, screenshot placeholder, and the live GitHub Pages URL (placeholder until enabled).

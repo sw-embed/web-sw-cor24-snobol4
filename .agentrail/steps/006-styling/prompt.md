@@ -1,0 +1,1 @@
+Add src/ui.css with a dark theme matching the macrolisp project's vibe: monospace for source/data/output panels, system sans for chrome, max-width ~960px centered. Reference it from index.html via Trunk's data-trunk link.

@@ -1,0 +1,7 @@
+number = 2
+slug = "embed-interpreter"
+status = "pending"
+description = "Copy ../sw-cor24-snobol4/build/snobol4.bin to assets/snobol4.bin and embed it..."
+role = "production"
+context_files = []
+created_at = "2026-04-07T12:57:39"

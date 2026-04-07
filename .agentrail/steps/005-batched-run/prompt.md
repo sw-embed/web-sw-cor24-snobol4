@@ -1,0 +1,1 @@
+Convert the runner to a batched/tick mode driven by gloo Timeout (BATCH_SIZE instructions per tick, like web-sw-cor24-macrolisp). Add a Stop button (replaces Run while running), Esc to stop, and a status line showing instructions executed and elapsed ms. On budget exhaustion show 'halted (budget)' with an 'Increase budget' link that 4x's max_instrs and re-runs.

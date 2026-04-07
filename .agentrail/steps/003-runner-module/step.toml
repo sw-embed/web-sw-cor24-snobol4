@@ -1,0 +1,7 @@
+number = 3
+slug = "runner-module"
+status = "pending"
+description = "Implement src/runner.rs with run_snobol4(src, data, max_instrs) -> Result<Run..."
+role = "production"
+context_files = []
+created_at = "2026-04-07T12:57:39"

@@ -1,0 +1,7 @@
+number = 5
+slug = "batched-run"
+status = "pending"
+description = "Convert the runner to a batched/tick mode driven by gloo Timeout (BATCH_SIZE ..."
+role = "production"
+context_files = []
+created_at = "2026-04-07T12:57:39"

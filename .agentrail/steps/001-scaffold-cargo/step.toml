@@ -1,0 +1,7 @@
+number = 1
+slug = "scaffold-cargo"
+status = "in-progress"
+description = "Scaffold a Rust+Yew+Trunk WASM project. Create Cargo.toml (cdylib+rlib, editi..."
+role = "production"
+context_files = []
+created_at = "2026-04-07T12:57:39"
