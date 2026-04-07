@@ -1,3 +1,4 @@
+* FizzBuzz 1..15 in SNOBOL4
  N = 1
 L R = REMDR(N,15)
  EQ(R,0) :S(A)
