@@ -9,7 +9,7 @@ use demos::DEMOS;
 use runner::Session;
 
 const DEFAULT_DEMO: &str = "hello";
-const DEFAULT_MAX_INSTRS: u64 = 50_000_000;
+const DEFAULT_MAX_INSTRS: u64 = 200_000_000;
 const BATCH_SIZE: u64 = 200_000;
 const TICK_DELAY_MS: u32 = 0;
 

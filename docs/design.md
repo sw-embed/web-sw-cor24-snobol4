@@ -84,3 +84,14 @@ Idle ──Run──▶ Running ──tick (budget left)──▶ Running
 - Saving snippets to localStorage.
 - Sharing via URL hash (nice-to-have follow-up).
 - Trace / register / memory inspectors.
+
+## Stack pointer note
+
+The runner disables the emulator's stack-bounds check
+(`set_stack_bounds(0, 0)`) because the SNOBOL4 interpreter manages its
+own stack/heap layout outside the strict 8 KB EBR window. If a program
+ever needs more than 8 KB of stack, **bump the initial SP to the top
+of SRAM** (above the upward-growing SNOBOL4 heap) so the stack grows
+down toward the heap and effectively gets the entire SRAM region as a
+stack arena. Not exposed in the v1 UI; would land as a numeric "stack
+top" input or a preset dropdown if needed.

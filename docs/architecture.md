@@ -116,3 +116,21 @@ Same pattern as `../web-sw-cor24-macrolisp`:
    every push to `main`.
 
 This avoids needing Rust/Trunk in CI and keeps the workflow trivial.
+
+## Stack pointer & memory layout
+
+COR24 has a small 8 KB Embedded Block RAM window at `0xFEE000–0xFEFFFF`
+that the default hardware stack lives in (initial SP = `0xFEEC00`, 3 KB
+populated; `0xFF0000` for the full 8 KB). The SNOBOL4 interpreter manages
+its own stack/heap layout and uses SP outside the strict EBR window, so
+`runner::Session::new` calls `emu.set_stack_bounds(0, 0)` to disable the
+emulator's bounds check.
+
+**If a program ever needs more than 8 KB of stack**, the SP can be
+initialized to the **top of main SRAM**, above the upward-growing heap.
+SNOBOL4's heap grows up from a low SRAM base, so a stack growing down
+from the top of SRAM (e.g. just below `0xFEE000`, where the EBR window
+begins) gives effectively the entire SRAM region as a stack arena while
+keeping heap and stack from colliding until they meet in the middle —
+the same trick traditional Unix processes use. This is not done by
+default; bump SP in `Session::new` if/when needed.

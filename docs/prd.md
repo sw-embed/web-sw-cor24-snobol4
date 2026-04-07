@@ -45,3 +45,12 @@ edit a `.sno` example, hit Run, and see output.
 - Cold-load to first successful Run on a typical laptop is under 5 seconds.
 - Repository builds with `trunk build --release` from a clean checkout, given
   sibling repos `sw-cor24-snobol4` and `sw-cor24-emulator`.
+
+## Memory & stack notes
+
+The SNOBOL4 interpreter manages its own stack/heap layout, so the web
+runner disables the emulator's stack-bounds check. If a future program
+exhausts even the 8 KB EBR stack, the SP can be **initialized to the
+top of SRAM** (above the upward-growing heap), making the entire SRAM
+region available as a stack arena that meets the heap in the middle —
+the classic stack-down/heap-up split. Out of scope for v1 unless needed.

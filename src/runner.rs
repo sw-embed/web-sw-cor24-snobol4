@@ -52,6 +52,14 @@ impl Session {
             emu.write_byte(DATA_ADDR + data.len() as u32, 0);
         }
         emu.set_pc(0);
+        // SNOBOL4 manages its own stack/heap layout and uses SP outside the
+        // strict 8 KB EBR window. Disable the emulator's stack-bounds check
+        // (set_stack_bounds(0, 0)) so the interpreter can grow its stack
+        // freely upward into SRAM, mirroring how the binary runs under
+        // cor24-run with default settings. See docs/architecture.md for
+        // a note on bumping SP to the top of SRAM if a deeper stack is
+        // ever needed.
+        emu.set_stack_bounds(0, 0);
         emu.resume();
 
         Self {

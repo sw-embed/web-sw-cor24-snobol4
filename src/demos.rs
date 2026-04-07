@@ -19,6 +19,7 @@ pub static DEMOS: &[Demo] = &[
     Demo { name: "break",      source: include_str!("../examples/break.sno"),      data: None },
     Demo { name: "concat",     source: include_str!("../examples/concat.sno"),     data: None },
     Demo { name: "count",      source: include_str!("../examples/count.sno"),      data: None },
+    Demo { name: "fizzbuzz",   source: include_str!("../examples/fizzbuzz.sno"),   data: None },
     Demo { name: "hello",      source: include_str!("../examples/hello.sno"),      data: None },
     Demo { name: "hello-goto", source: include_str!("../examples/hello_goto.sno"), data: None },
     Demo { name: "input",      source: include_str!("../examples/input.sno"),      data: Some(include_str!("../examples/input.dat")) },

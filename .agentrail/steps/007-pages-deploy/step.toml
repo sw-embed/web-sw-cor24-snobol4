@@ -1,7 +1,8 @@
 number = 7
 slug = "pages-deploy"
-status = "in-progress"
+status = "completed"
 description = "Run 'trunk build --release', copy dist/* into pages/, commit pages/. Confirm ..."
 role = "production"
 context_files = []
 created_at = "2026-04-07T12:57:39"
+completed_at = "2026-04-07T13:16:59"
