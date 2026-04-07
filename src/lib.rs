@@ -28,6 +28,8 @@ pub enum Msg {
     Run,
     Tick,
     Stop,
+    Reset,
+    Clear,
     IncreaseBudget,
     KeyDown(KeyboardEvent),
 }
@@ -146,6 +148,24 @@ impl Component for App {
                 }
                 true
             }
+            Msg::Reset => {
+                // Reload current demo from source, discarding edits.
+                let idx = self.selected;
+                self.running = false;
+                self.session = None;
+                self.load_demo(idx);
+                self.max_instrs = DEFAULT_MAX_INSTRS;
+                true
+            }
+            Msg::Clear => {
+                self.output.clear();
+                if !self.running {
+                    self.status = "idle".into();
+                    self.error = false;
+                    self.budget_exhausted = false;
+                }
+                true
+            }
             Msg::Tick => {
                 if !self.running {
                     return false;
@@ -219,6 +239,8 @@ impl Component for App {
         });
         let on_run = ctx.link().callback(|_| Msg::Run);
         let on_stop = ctx.link().callback(|_| Msg::Stop);
+        let on_reset = ctx.link().callback(|_| Msg::Reset);
+        let on_clear = ctx.link().callback(|_| Msg::Clear);
         let on_inc = ctx.link().callback(|_| Msg::IncreaseBudget);
         let on_keydown = ctx.link().callback(Msg::KeyDown);
 
@@ -242,6 +264,8 @@ impl Component for App {
                             })}
                         </select>
                         { run_button }
+                        <button class="secondary" onclick={on_reset} disabled={self.running}>{ "Reset" }</button>
+                        <button class="secondary" onclick={on_clear}>{ "Clear" }</button>
                     </div>
                 </header>
                 <section class="panel">

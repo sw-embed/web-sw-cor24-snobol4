@@ -89,6 +89,19 @@ button:hover {
   border-color: var(--accent-hover);
 }
 
+.controls button.secondary {
+  background: var(--panel);
+  color: var(--text);
+  border-color: var(--panel-border);
+  font-weight: 500;
+}
+
+.controls button.secondary:hover {
+  border-color: var(--accent);
+  background: var(--panel);
+  color: var(--accent);
+}
+
 select:disabled,
 button:disabled {
   opacity: 0.5;
