@@ -1,0 +1,1 @@
+Copied snobol4.bin to assets/, copied 10 demo .sno files + input.dat to examples/, added src/demos.rs with SNOBOL4_BIN and alphabetically-sorted DEMOS table embedded via include_bytes!/include_str!, documented in README. cargo check passes.

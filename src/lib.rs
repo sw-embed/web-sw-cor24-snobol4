@@ -1,6 +1,7 @@
 use yew::prelude::*;
 
 pub mod demos;
+pub mod runner;
 
 pub struct App;
 

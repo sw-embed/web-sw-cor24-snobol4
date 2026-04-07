@@ -1,6 +1,6 @@
 number = 3
 slug = "runner-module"
-status = "pending"
+status = "in-progress"
 description = "Implement src/runner.rs with run_snobol4(src, data, max_instrs) -> Result<Run..."
 role = "production"
 context_files = []
