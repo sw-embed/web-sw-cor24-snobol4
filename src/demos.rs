@@ -15,15 +15,59 @@ pub struct Demo {
 
 /// All bundled demos, sorted alphabetically by display name.
 pub static DEMOS: &[Demo] = &[
-    Demo { name: "array",      source: include_str!("../examples/array.sno"),      data: None },
-    Demo { name: "break",      source: include_str!("../examples/break.sno"),      data: None },
-    Demo { name: "concat",     source: include_str!("../examples/concat.sno"),     data: None },
-    Demo { name: "count",      source: include_str!("../examples/count.sno"),      data: None },
-    Demo { name: "fizzbuzz",   source: include_str!("../examples/fizzbuzz.sno"),   data: None },
-    Demo { name: "hello",      source: include_str!("../examples/hello.sno"),      data: None },
-    Demo { name: "hello-goto", source: include_str!("../examples/hello_goto.sno"), data: None },
-    Demo { name: "input",      source: include_str!("../examples/input.sno"),      data: Some(include_str!("../examples/input.dat")) },
-    Demo { name: "multiply",   source: include_str!("../examples/multiply.sno"),   data: None },
-    Demo { name: "span",       source: include_str!("../examples/span.sno"),       data: None },
-    Demo { name: "span-fail",  source: include_str!("../examples/span_fail.sno"),  data: None },
+    Demo {
+        name: "array",
+        source: include_str!("../examples/array.sno"),
+        data: None,
+    },
+    Demo {
+        name: "break",
+        source: include_str!("../examples/break.sno"),
+        data: None,
+    },
+    Demo {
+        name: "concat",
+        source: include_str!("../examples/concat.sno"),
+        data: None,
+    },
+    Demo {
+        name: "count",
+        source: include_str!("../examples/count.sno"),
+        data: None,
+    },
+    Demo {
+        name: "fizzbuzz",
+        source: include_str!("../examples/fizzbuzz.sno"),
+        data: None,
+    },
+    Demo {
+        name: "hello",
+        source: include_str!("../examples/hello.sno"),
+        data: None,
+    },
+    Demo {
+        name: "hello-goto",
+        source: include_str!("../examples/hello_goto.sno"),
+        data: None,
+    },
+    Demo {
+        name: "input",
+        source: include_str!("../examples/input.sno"),
+        data: Some(include_str!("../examples/input.dat")),
+    },
+    Demo {
+        name: "multiply",
+        source: include_str!("../examples/multiply.sno"),
+        data: None,
+    },
+    Demo {
+        name: "span",
+        source: include_str!("../examples/span.sno"),
+        data: None,
+    },
+    Demo {
+        name: "span-fail",
+        source: include_str!("../examples/span_fail.sno"),
+        data: None,
+    },
 ];

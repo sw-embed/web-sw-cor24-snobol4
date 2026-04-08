@@ -75,7 +75,10 @@ impl Session {
     /// emulator stops for any reason.
     pub fn tick(&mut self, batch: u64) -> TickResult {
         if self.done {
-            return TickResult { instructions_run: 0, done: true };
+            return TickResult {
+                instructions_run: 0,
+                done: true,
+            };
         }
         let result = self.emu.run_batch(batch);
         self.instructions += result.instructions_run as u64;

@@ -189,3 +189,42 @@ pre.out {
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+.github-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+.github-corner svg {
+  fill: var(--accent);
+  color: var(--bg);
+}
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
+@keyframes octocat-wave {
+  0%, 100% { transform: rotate(0); }
+  20%, 60% { transform: rotate(-25deg); }
+  40%, 80% { transform: rotate(10deg); }
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 20px;
+  font-size: 0.75em;
+  color: var(--text-dim);
+  border-top: 1px solid var(--panel-border);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+.footer-sep { color: #444; }

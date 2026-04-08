@@ -14,7 +14,10 @@ const BATCH_SIZE: u64 = 200_000;
 const TICK_DELAY_MS: u32 = 0;
 
 fn default_demo_index() -> usize {
-    DEMOS.iter().position(|d| d.name == DEFAULT_DEMO).unwrap_or(0)
+    DEMOS
+        .iter()
+        .position(|d| d.name == DEFAULT_DEMO)
+        .unwrap_or(0)
 }
 
 fn now_ms() -> f64 {
@@ -178,10 +181,7 @@ impl Component for App {
                 if remaining == 0 {
                     self.budget_exhausted = true;
                     let instrs = session.instructions;
-                    self.finish(
-                        format!("halted (budget) — {} instrs", instrs),
-                        true,
-                    );
+                    self.finish(format!("halted (budget) — {} instrs", instrs), true);
                     return true;
                 }
                 let batch = remaining.min(BATCH_SIZE);
@@ -192,7 +192,11 @@ impl Component for App {
                     let reason = session.stop_reason.clone();
                     self.finish(
                         if halted {
-                            format!("done ({} instrs, {:.0} ms)", instrs, now_ms() - self.started_at)
+                            format!(
+                                "done ({} instrs, {:.0} ms)",
+                                instrs,
+                                now_ms() - self.started_at
+                            )
                         } else {
                             format!("{} ({} instrs)", reason, instrs)
                         },
@@ -244,7 +248,11 @@ impl Component for App {
         let on_inc = ctx.link().callback(|_| Msg::IncreaseBudget);
         let on_keydown = ctx.link().callback(Msg::KeyDown);
 
-        let status_class = if self.error { "status status-error" } else { "status" };
+        let status_class = if self.error {
+            "status status-error"
+        } else {
+            "status"
+        };
         let run_button = if self.running {
             html! { <button onclick={on_stop}>{ "Stop" }</button> }
         } else {
@@ -252,6 +260,25 @@ impl Component for App {
         };
 
         html! {
+            <>
+            <a href="https://github.com/sw-embed/web-sw-cor24-snobol4" class="github-corner"
+               aria-label="View source on GitHub" target="_blank">
+                <svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true">
+                    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z" />
+                    <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 \
+                        120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 \
+                        C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor"
+                        style="transform-origin:130px 106px;" class="octo-arm" />
+                    <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 \
+                        139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 \
+                        159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 \
+                        C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 \
+                        216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 \
+                        198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 \
+                        152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+                        fill="currentColor" />
+                </svg>
+            </a>
             <main class="page" onkeydown={on_keydown.clone()}>
                 <header class="chrome">
                     <h1>{ "web-sw-cor24-snobol4" }</h1>
@@ -310,6 +337,30 @@ impl Component for App {
                     <pre class="out">{ &self.output }</pre>
                 </section>
             </main>
+            <footer>
+                <span>{"MIT License"}</span>
+                <span class="footer-sep">{"\u{00b7}"}</span>
+                <span>{"\u{00a9} 2026 Michael A Wright"}</span>
+                <span class="footer-sep">{"\u{00b7}"}</span>
+                <a href="https://makerlisp.com" target="_blank">{"COR24-TB"}</a>
+                <span class="footer-sep">{"\u{00b7}"}</span>
+                <a href="https://software-wrighter-lab.github.io/" target="_blank">{"Blog"}</a>
+                <span class="footer-sep">{"\u{00b7}"}</span>
+                <a href="https://discord.com/invite/Ctzk5uHggZ" target="_blank">{"Discord"}</a>
+                <span class="footer-sep">{"\u{00b7}"}</span>
+                <a href="https://www.youtube.com/@SoftwareWrighter" target="_blank">{"YouTube"}</a>
+                <span class="footer-sep">{"\u{00b7}"}</span>
+                <a href="https://github.com/sw-embed/web-sw-cor24-snobol4/blob/main/docs/demos.md" target="_blank">{"Demo Documentation"}</a>
+                <span class="footer-sep">{"\u{00b7}"}</span>
+                <a href="https://github.com/sw-embed/web-sw-cor24-snobol4/blob/main/CHANGES.md" target="_blank">{"Changes"}</a>
+                <span class="footer-sep">{"\u{00b7}"}</span>
+                <span>{ format!("{} \u{00b7} {} \u{00b7} {}",
+                    env!("BUILD_HOST"),
+                    env!("BUILD_SHA"),
+                    env!("BUILD_TIMESTAMP"),
+                ) }</span>
+            </footer>
+            </>
         }
     }
 }
