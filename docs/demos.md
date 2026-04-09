@@ -107,6 +107,72 @@ DONE   OUTPUT = 'End of input'
 END
 ```
 
+## n-queens
+
+Solves the 4-queens problem via backtracking, printing the column index of
+each queen for both solutions (rows 1..4).
+
+```sno
+        Q = ARRAY('1:4')
+        UC = ARRAY('1:4')
+        D1 = ARRAY('1:8')
+        D2 = ARRAY('1:7')
+        R = 1
+        Q<1> = 1
+TRY     GT(R,4) :S(PRINT)
+        T = Q<R>
+        GT(T,4) :S(BACK)
+        T = UC<T>
+        EQ(T,1) :S(NXT)
+        T = Q<R>
+        D = R + T
+        T = D1<D>
+        EQ(T,1) :S(NXT)
+        T = Q<R>
+        D = R - T
+        D = D + 4
+        T = D2<D>
+        EQ(T,1) :S(NXT)
+        T = Q<R>
+        UC<T> = 1
+        T = Q<R>
+        D = R + T
+        D1<D> = 1
+        T = Q<R>
+        D = R - T
+        D = D + 4
+        D2<D> = 1
+        R = R + 1
+        Q<R> = 1
+        :(TRY)
+NXT     T = Q<R>
+        T = T + 1
+        Q<R> = T
+        :(TRY)
+PRINT   OUTPUT = Q<1>
+        OUTPUT = Q<2>
+        OUTPUT = Q<3>
+        OUTPUT = Q<4>
+BACK    R = R - 1
+        EQ(R,0) :S(END)
+        T = Q<R>
+        UC<T> = 0
+        T = Q<R>
+        D = R + T
+        D1<D> = 0
+        T = Q<R>
+        D = R - T
+        D = D + 4
+        D2<D> = 0
+        T = Q<R>
+        T = T + 1
+        Q<R> = T
+        :(TRY)
+END
+```
+
+Expected output: `2 4 1 3` then `3 1 4 2`.
+
 ## multiply
 
 Arithmetic multiplication.

@@ -56,6 +56,11 @@ pub static DEMOS: &[Demo] = &[
         data: Some(include_str!("../examples/input.dat")),
     },
     Demo {
+        name: "n-queens",
+        source: include_str!("../examples/nqueens.sno"),
+        data: None,
+    },
+    Demo {
         name: "multiply",
         source: include_str!("../examples/multiply.sno"),
         data: None,
