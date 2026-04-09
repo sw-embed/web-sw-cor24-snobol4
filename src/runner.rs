@@ -27,6 +27,12 @@ pub struct Session {
     /// True if no data file was provided -- the interpreter probes
     /// 0x090000 at startup and switches READ_INPUT to live UART mode.
     interactive: bool,
+    /// Bytes queued for injection into the UART RX register. The RX
+    /// register has FIFO depth 1, so calling `send_uart_byte` in a tight
+    /// loop overwrites earlier bytes. Instead we drain one byte per
+    /// `tick()` -- that gives the interpreter a full instruction batch
+    /// to poll/consume each byte before we hand it the next one.
+    rx_queue: std::collections::VecDeque<u8>,
 }
 
 /// Result of a single batched tick.
@@ -73,6 +79,7 @@ impl Session {
             stop_reason: String::new(),
             halted: false,
             interactive,
+            rx_queue: std::collections::VecDeque::new(),
         }
     }
 
@@ -84,6 +91,15 @@ impl Session {
                 instructions_run: 0,
                 done: true,
             };
+        }
+        // Drain at most one queued RX byte per tick. The previous tick
+        // ran a full instruction batch (~200k instrs), which is far
+        // more than enough for SNOBOL's READ_INPUT polling loop to
+        // consume the byte we handed it last time. Sending one byte
+        // per tick respects the UART RX register's depth-1 semantics
+        // without needing to poll uart_rx_ready (which isn't exported).
+        if let Some(byte) = self.rx_queue.pop_front() {
+            self.emu.send_uart_byte(byte);
         }
         let result = self.emu.run_batch(batch);
         self.instructions += result.instructions_run as u64;
@@ -136,12 +152,11 @@ impl Session {
         self.emu.get_uart_output()
     }
 
-    /// Inject a byte into the emulated UART RX register. The SNOBOL4
-    /// interpreter's `READ_INPUT` polls UART RX in TTY mode (when no data
-    /// file is loaded at 0x090000), so this is how the browser feeds live
-    /// keystrokes to a running program.
+    /// Queue a byte for delivery to the emulated UART RX register.
+    /// Bytes drain one-per-tick (see `tick`) so a full typed line
+    /// arrives without overwriting itself in the depth-1 RX register.
     pub fn send_input_byte(&mut self, byte: u8) {
-        self.emu.send_uart_byte(byte);
+        self.rx_queue.push_back(byte);
     }
 
     /// True if the session was started without a data file -- in that case
