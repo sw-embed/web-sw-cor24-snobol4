@@ -36,8 +36,28 @@ pub static DEMOS: &[Demo] = &[
         data: None,
     },
     Demo {
+        name: "eliza",
+        source: include_str!("../examples/eliza.sno"),
+        data: Some(include_str!("../examples/eliza.dat")),
+    },
+    Demo {
+        name: "factorial",
+        source: include_str!("../examples/factorial.sno"),
+        data: None,
+    },
+    Demo {
+        name: "fibonacci",
+        source: include_str!("../examples/fibonacci.sno"),
+        data: None,
+    },
+    Demo {
         name: "fizzbuzz",
         source: include_str!("../examples/fizzbuzz.sno"),
+        data: None,
+    },
+    Demo {
+        name: "gcd",
+        source: include_str!("../examples/gcd.sno"),
         data: None,
     },
     Demo {
@@ -56,13 +76,28 @@ pub static DEMOS: &[Demo] = &[
         data: Some(include_str!("../examples/input.dat")),
     },
     Demo {
+        name: "multiply",
+        source: include_str!("../examples/multiply.sno"),
+        data: None,
+    },
+    Demo {
         name: "n-queens",
         source: include_str!("../examples/nqueens.sno"),
         data: None,
     },
     Demo {
-        name: "multiply",
-        source: include_str!("../examples/multiply.sno"),
+        name: "palindrome",
+        source: include_str!("../examples/palindrome.sno"),
+        data: None,
+    },
+    Demo {
+        name: "reverse",
+        source: include_str!("../examples/reverse.sno"),
+        data: None,
+    },
+    Demo {
+        name: "sieve",
+        source: include_str!("../examples/sieve.sno"),
         data: None,
     },
     Demo {
