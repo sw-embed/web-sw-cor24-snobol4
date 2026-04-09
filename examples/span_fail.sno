@@ -1,3 +1,8 @@
+* SPAN-FAIL DEMO
+* --------------
+* Same SPAN pattern as the "span" demo, but the subject "abc xyz" has
+* no digits at all. The match fails, :F(NO) fires, and we print "no match".
+* This shows how SNOBOL4 control flow is driven by pattern success/failure.
        DIGITS = SPAN('0123456789')
        TEXT = 'abc xyz'
        TEXT DIGITS . N :F(NO)

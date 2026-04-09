@@ -1,3 +1,10 @@
+* SPAN DEMO
+* ---------
+* SPAN(chars) is a pattern that matches a maximal run of one or more
+* characters drawn from the given set. Here we scan TEXT for the first
+* run of digits and bind it to N with the . operator.
+*   :F(NO)  -- if no digit run is found, branch to NO
+* Subject "abc 123 xyz" yields N = "123".
        DIGITS = SPAN('0123456789')
        TEXT = 'abc 123 xyz'
        TEXT DIGITS . N :F(NO)

@@ -1,3 +1,6 @@
+* MULTIPLY DEMO
+* -------------
+* Integer arithmetic: assign 7 to X, compute X * 6, print the result (42).
        X = 7
        Y = X * 6
        OUTPUT = Y

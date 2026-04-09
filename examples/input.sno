@@ -1,3 +1,9 @@
+* INPUT DEMO
+* ----------
+* Reads lines from the "input data" textarea and echoes them to OUTPUT.
+* Reading the special variable INPUT consumes one line; when there is no
+* more data the read FAILS, and :F(DONE) branches to the DONE label.
+* Try editing the input data on the right and re-running.
 READ   LINE = INPUT                :F(DONE)
        OUTPUT = LINE               :(READ)
 DONE   OUTPUT = 'End of input'

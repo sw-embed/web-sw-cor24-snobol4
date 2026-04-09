@@ -1,3 +1,11 @@
+* BREAK DEMO
+* -----------
+* Parses a pipe-delimited record into three fields using the BREAK pattern.
+*   BREAK('|')      matches everything up to (but not including) the next '|'
+*   . NAME          binds the matched substring to the variable NAME
+*   REM             matches the remainder of the subject
+*   :F(NO)          on match failure, branch to label NO
+* If parsing succeeds we print NAME, SEX, MAJOR; otherwise "parse failed".
        LINE = 'Alice|F|English'
        LINE BREAK('|') . NAME '|' BREAK('|') . SEX '|' REM . MAJOR :F(NO)
        OUTPUT = NAME

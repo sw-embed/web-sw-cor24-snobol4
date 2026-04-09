@@ -1,4 +1,12 @@
-* FizzBuzz 1..15 in SNOBOL4
+* FIZZBUZZ DEMO
+* -------------
+* Classic FizzBuzz for N = 1..15.
+*   REMDR(N,K)   returns N mod K
+*   EQ(R,0)      predicate; succeeds when R == 0
+*   :S(label)    branch to label on success of the previous statement
+*   :(label)     unconditional branch
+* For each N: print FizzBuzz if divisible by 15, else Fizz if by 3,
+* else Buzz if by 5, else N itself. Then increment and loop while N <= 15.
  N = 1
 L R = REMDR(N,15)
  EQ(R,0) :S(A)

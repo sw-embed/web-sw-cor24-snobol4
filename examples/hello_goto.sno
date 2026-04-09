@@ -1,3 +1,8 @@
+* HELLO-GOTO DEMO
+* ---------------
+* Demonstrates an unconditional goto using the :(label) suffix.
+* The first line prints "Hello, World!" and then jumps directly to END,
+* so the second line is unreachable and never runs.
        OUTPUT = 'Hello, World!' :(END)
        OUTPUT = 'This should not print'
 END

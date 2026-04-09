@@ -1,3 +1,8 @@
+* CONCAT DEMO
+* -----------
+* Strings concatenate by simple juxtaposition (no operator needed):
+* writing two expressions next to each other glues them together.
+* Prints: Hello, World!
        NAME = 'World'
        OUTPUT = 'Hello, ' NAME '!'
 END

@@ -1,3 +1,9 @@
+* ARRAY DEMO
+* -----------
+* Allocates a 50-element array, stores three names, and prints them.
+*   ARRAY('1:50')   creates an array indexed 1..50
+*   NAMES<i>        accesses element i (angle brackets, not parens)
+*   OUTPUT = expr   prints expr as a line of output
        NAMES = ARRAY('1:50')
        NAMES<1> = 'Alice'
        NAMES<2> = 'Bob'

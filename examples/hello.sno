@@ -1,2 +1,6 @@
+* HELLO DEMO
+* ----------
+* The smallest possible SNOBOL4 program. Assigning a value to the
+* special variable OUTPUT prints it as a line. END terminates the program.
        OUTPUT = 'Hello, World!'
 END
