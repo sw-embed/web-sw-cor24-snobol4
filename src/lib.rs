@@ -1,6 +1,7 @@
 use gloo::timers::callback::Timeout;
 use web_sys::{HtmlInputElement, HtmlSelectElement, HtmlTextAreaElement, KeyboardEvent};
 use yew::prelude::*;
+use yew::NodeRef;
 
 pub mod demos;
 pub mod runner;
@@ -28,7 +29,6 @@ pub enum Msg {
     SelectDemo(usize),
     SourceChanged(String),
     DataChanged(String),
-    StdinChanged(String),
     StdinSubmit,
     Run,
     Tick,
@@ -53,8 +53,11 @@ pub struct App {
     elapsed_ms: f64,
     /// True when last run halted on budget exhaustion (offer Increase Budget).
     budget_exhausted: bool,
-    /// Pending text in the stdin input field (interactive mode only).
-    stdin_buf: String,
+    /// Ref to the stdin <input>. The field is uncontrolled (no `value`
+    /// prop) so the perpetual Tick re-renders don't stomp what the
+    /// user is typing -- on submit we read the live DOM value via this
+    /// ref and clear it imperatively.
+    stdin_ref: NodeRef,
 }
 
 impl App {
@@ -121,7 +124,7 @@ impl Component for App {
             started_at: 0.0,
             elapsed_ms: 0.0,
             budget_exhausted: false,
-            stdin_buf: String::new(),
+            stdin_ref: NodeRef::default(),
         }
     }
 
@@ -140,22 +143,23 @@ impl Component for App {
                 self.data = v;
                 false
             }
-            Msg::StdinChanged(v) => {
-                self.stdin_buf = v;
-                false
-            }
             Msg::StdinSubmit => {
                 if let Some(session) = self.session.as_mut() {
-                    if session.is_interactive() && !self.stdin_buf.is_empty() {
-                        for b in self.stdin_buf.bytes() {
-                            session.send_input_byte(b);
+                    if session.is_interactive() {
+                        if let Some(input) = self.stdin_ref.cast::<HtmlInputElement>() {
+                            let line = input.value();
+                            for b in line.bytes() {
+                                session.send_input_byte(b);
+                            }
+                            // Newline terminates the line for READ_INPUT.
+                            // Always send it, even on empty input, so the
+                            // user can advance eliza's default-prompt rotation.
+                            session.send_input_byte(b'\n');
+                            input.set_value("");
                         }
-                        // Newline terminates the line for READ_INPUT
-                        session.send_input_byte(b'\n');
-                        self.stdin_buf.clear();
                     }
                 }
-                true
+                false
             }
             Msg::Run => {
                 self.max_instrs = DEFAULT_MAX_INSTRS;
@@ -278,10 +282,6 @@ impl Component for App {
         let on_clear = ctx.link().callback(|_| Msg::Clear);
         let on_inc = ctx.link().callback(|_| Msg::IncreaseBudget);
         let on_keydown = ctx.link().callback(Msg::KeyDown);
-        let on_stdin = ctx.link().callback(|e: InputEvent| {
-            let target: HtmlInputElement = e.target_unchecked_into();
-            Msg::StdinChanged(target.value())
-        });
         let on_stdin_key = ctx.link().callback(|e: KeyboardEvent| {
             if e.key() == "Enter" {
                 e.prevent_default();
@@ -389,11 +389,10 @@ impl Component for App {
                         html! {
                             <div class="stdin-row">
                                 <input
+                                    ref={self.stdin_ref.clone()}
                                     type="text"
                                     class="stdin"
                                     placeholder="type a line and press Enter…"
-                                    value={self.stdin_buf.clone()}
-                                    oninput={on_stdin}
                                     onkeydown={on_stdin_key}
                                 />
                             </div>
