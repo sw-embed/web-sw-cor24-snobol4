@@ -158,6 +158,9 @@ function __wbg_get_imports() {
             const ret = arg0.__yew_listener_id;
             return isLikeNone(ret) ? 0x100000001 : (ret) >>> 0;
         },
+        __wbg_log_4c0baeb8af2f8f89: function(arg0) {
+            console.log(arg0);
+        },
         __wbg_metaKey_cabf24bec9d42077: function(arg0) {
             const ret = arg0.metaKey;
             return ret;
@@ -324,7 +327,7 @@ function __wbg_get_imports() {
             return ret;
         },
         __wbindgen_cast_0000000000000002: function(arg0, arg1) {
-            // Cast intrinsic for `Closure(Closure { owned: true, function: Function { arguments: [Ref(NamedExternref("Event"))], shim_idx: 62, ret: Unit, inner_ret: Some(Unit) }, mutable: false }) -> Externref`.
+            // Cast intrinsic for `Closure(Closure { owned: true, function: Function { arguments: [Ref(NamedExternref("Event"))], shim_idx: 64, ret: Unit, inner_ret: Some(Unit) }, mutable: false }) -> Externref`.
             const ret = makeClosure(arg0, arg1, wasm_bindgen__convert__closures________invoke__ha5ed7d15ede49420);
             return ret;
         },

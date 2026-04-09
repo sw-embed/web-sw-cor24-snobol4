@@ -144,16 +144,18 @@ impl Component for App {
                 false
             }
             Msg::StdinSubmit => {
+                web_sys::console::log_1(&"StdinSubmit fired".into());
                 if let Some(session) = self.session.as_mut() {
+                    web_sys::console::log_1(&format!("session.interactive={}", session.is_interactive()).into());
                     if session.is_interactive() {
-                        if let Some(input) = self.stdin_ref.cast::<HtmlInputElement>() {
+                        let cast = self.stdin_ref.cast::<HtmlInputElement>();
+                        web_sys::console::log_1(&format!("ref bound: {}", cast.is_some()).into());
+                        if let Some(input) = cast {
                             let line = input.value();
+                            web_sys::console::log_1(&format!("line = {:?}", line).into());
                             for b in line.bytes() {
                                 session.send_input_byte(b);
                             }
-                            // Newline terminates the line for READ_INPUT.
-                            // Always send it, even on empty input, so the
-                            // user can advance eliza's default-prompt rotation.
                             session.send_input_byte(b'\n');
                             input.set_value("");
                         }
