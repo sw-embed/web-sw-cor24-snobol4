@@ -24,6 +24,9 @@ pub struct Session {
     pub stop_reason: String,
     /// True if the program halted cleanly (HALT instruction).
     pub halted: bool,
+    /// True if no data file was provided -- the interpreter probes
+    /// 0x090000 at startup and switches READ_INPUT to live UART mode.
+    interactive: bool,
 }
 
 /// Result of a single batched tick.
@@ -62,12 +65,14 @@ impl Session {
         emu.set_stack_bounds(0, 0);
         emu.resume();
 
+        let interactive = data.is_empty();
         Self {
             emu,
             instructions: 0,
             done: false,
             stop_reason: String::new(),
             halted: false,
+            interactive,
         }
     }
 
@@ -129,5 +134,19 @@ impl Session {
 
     pub fn output(&self) -> &str {
         self.emu.get_uart_output()
+    }
+
+    /// Inject a byte into the emulated UART RX register. The SNOBOL4
+    /// interpreter's `READ_INPUT` polls UART RX in TTY mode (when no data
+    /// file is loaded at 0x090000), so this is how the browser feeds live
+    /// keystrokes to a running program.
+    pub fn send_input_byte(&mut self, byte: u8) {
+        self.emu.send_uart_byte(byte);
+    }
+
+    /// True if the session was started without a data file -- in that case
+    /// the interpreter is in TTY mode and `send_input_byte` is meaningful.
+    pub fn is_interactive(&self) -> bool {
+        self.interactive
     }
 }

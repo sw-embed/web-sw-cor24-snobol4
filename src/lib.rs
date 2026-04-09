@@ -1,5 +1,5 @@
 use gloo::timers::callback::Timeout;
-use web_sys::{HtmlSelectElement, HtmlTextAreaElement, KeyboardEvent};
+use web_sys::{HtmlInputElement, HtmlSelectElement, HtmlTextAreaElement, KeyboardEvent};
 use yew::prelude::*;
 
 pub mod demos;
@@ -28,6 +28,8 @@ pub enum Msg {
     SelectDemo(usize),
     SourceChanged(String),
     DataChanged(String),
+    StdinChanged(String),
+    StdinSubmit,
     Run,
     Tick,
     Stop,
@@ -51,6 +53,8 @@ pub struct App {
     elapsed_ms: f64,
     /// True when last run halted on budget exhaustion (offer Increase Budget).
     budget_exhausted: bool,
+    /// Pending text in the stdin input field (interactive mode only).
+    stdin_buf: String,
 }
 
 impl App {
@@ -117,6 +121,7 @@ impl Component for App {
             started_at: 0.0,
             elapsed_ms: 0.0,
             budget_exhausted: false,
+            stdin_buf: String::new(),
         }
     }
 
@@ -134,6 +139,23 @@ impl Component for App {
             Msg::DataChanged(v) => {
                 self.data = v;
                 false
+            }
+            Msg::StdinChanged(v) => {
+                self.stdin_buf = v;
+                false
+            }
+            Msg::StdinSubmit => {
+                if let Some(session) = self.session.as_mut() {
+                    if session.is_interactive() && !self.stdin_buf.is_empty() {
+                        for b in self.stdin_buf.bytes() {
+                            session.send_input_byte(b);
+                        }
+                        // Newline terminates the line for READ_INPUT
+                        session.send_input_byte(b'\n');
+                        self.stdin_buf.clear();
+                    }
+                }
+                true
             }
             Msg::Run => {
                 self.max_instrs = DEFAULT_MAX_INSTRS;
@@ -177,14 +199,23 @@ impl Component for App {
                     self.running = false;
                     return true;
                 };
-                let remaining = self.max_instrs.saturating_sub(session.instructions);
-                if remaining == 0 {
-                    self.budget_exhausted = true;
-                    let instrs = session.instructions;
-                    self.finish(format!("halted (budget) — {} instrs", instrs), true);
-                    return true;
-                }
-                let batch = remaining.min(BATCH_SIZE);
+                // Interactive sessions ignore the instruction budget --
+                // the program is expected to spin on UART RX poll while
+                // waiting for the user to type, so a fixed budget is
+                // meaningless. Use Stop to end the session.
+                let interactive = session.is_interactive();
+                let batch = if interactive {
+                    BATCH_SIZE
+                } else {
+                    let remaining = self.max_instrs.saturating_sub(session.instructions);
+                    if remaining == 0 {
+                        self.budget_exhausted = true;
+                        let instrs = session.instructions;
+                        self.finish(format!("halted (budget) — {} instrs", instrs), true);
+                        return true;
+                    }
+                    remaining.min(BATCH_SIZE)
+                };
                 let result = session.tick(batch);
                 if result.done {
                     let halted = session.halted;
@@ -247,6 +278,25 @@ impl Component for App {
         let on_clear = ctx.link().callback(|_| Msg::Clear);
         let on_inc = ctx.link().callback(|_| Msg::IncreaseBudget);
         let on_keydown = ctx.link().callback(Msg::KeyDown);
+        let on_stdin = ctx.link().callback(|e: InputEvent| {
+            let target: HtmlInputElement = e.target_unchecked_into();
+            Msg::StdinChanged(target.value())
+        });
+        let on_stdin_key = ctx.link().callback(|e: KeyboardEvent| {
+            if e.key() == "Enter" {
+                e.prevent_default();
+                Msg::StdinSubmit
+            } else {
+                Msg::KeyDown(e)
+            }
+        });
+
+        let interactive_running = self
+            .session
+            .as_ref()
+            .map(|s| s.is_interactive())
+            .unwrap_or(false)
+            && self.running;
 
         let status_class = if self.error {
             "status status-error"
@@ -335,6 +385,20 @@ impl Component for App {
                         } else { html! {} }}
                     </div>
                     <pre class="out">{ &self.output }</pre>
+                    { if interactive_running {
+                        html! {
+                            <div class="stdin-row">
+                                <input
+                                    type="text"
+                                    class="stdin"
+                                    placeholder="type a line and press Enter…"
+                                    value={self.stdin_buf.clone()}
+                                    oninput={on_stdin}
+                                    onkeydown={on_stdin_key}
+                                />
+                            </div>
+                        }
+                    } else { html! {} }}
                 </section>
             </main>
             <footer>

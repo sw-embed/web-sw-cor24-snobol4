@@ -35,8 +35,18 @@ pub static DEMOS: &[Demo] = &[
         source: include_str!("../examples/count.sno"),
         data: None,
     },
+    // Eliza ships with no data so the runner picks "interactive UART"
+    // mode -- the UI then shows a stdin field while the program waits
+    // on READ_INPUT. The canned eliza.dat is still bundled as the
+    // separate "eliza-batch" entry for users who want the non-REPL
+    // transcript or want to test on a CI run.
     Demo {
         name: "eliza",
+        source: include_str!("../examples/eliza.sno"),
+        data: None,
+    },
+    Demo {
+        name: "eliza-batch",
         source: include_str!("../examples/eliza.sno"),
         data: Some(include_str!("../examples/eliza.dat")),
     },

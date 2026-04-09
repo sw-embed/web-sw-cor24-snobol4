@@ -142,6 +142,27 @@ textarea.data:focus {
   border-color: var(--accent);
 }
 
+.stdin-row {
+  margin-top: 8px;
+}
+
+input.stdin {
+  width: 100%;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+input.stdin:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(100, 200, 255, 0.2);
+}
+
 .status {
   font-family: var(--mono);
   font-size: 12px;
