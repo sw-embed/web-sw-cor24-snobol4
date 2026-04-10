@@ -8,6 +8,8 @@ in the browser.
 
 **[Live Demo](https://sw-embed.github.io/web-sw-cor24-snobol4/)**
 
+Part of the [Software Wrighter COR24 Tools Project](https://sw-embed.github.io/web-sw-cor24-demos/#/).
+
 ![web-sw-cor24-snobol4 screenshot](images/screenshot.png)
 
 ## Features
@@ -50,3 +52,17 @@ cp -r dist/* pages/    # committed for GitHub Pages
 - [sw-cor24-snobol4](https://github.com/sw-embed/sw-cor24-snobol4) — the SNOBOL4 implementation
 - [sw-cor24-emulator](https://github.com/sw-embed/sw-cor24-emulator) — COR24 emulator (Rust)
 - [web-sw-cor24-macrolisp](https://github.com/sw-embed/web-sw-cor24-macrolisp) — sister web UI for the Lisp implementation
+
+## Links
+
+- Blog: [Software Wrighter Lab](https://software-wrighter-lab.github.io/)
+- Discord: [Join the community](https://discord.com/invite/Ctzk5uHggZ)
+- YouTube: [Software Wrighter](https://www.youtube.com/@SoftwareWrighter)
+
+## Copyright
+
+Copyright (c) 2026 Michael A. Wright
+
+## License
+
+MIT License
